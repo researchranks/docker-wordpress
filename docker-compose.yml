@@ -1,10 +1,7 @@
 version: '2'
 services:
     custom_wordpress_app:
-        #build: .
         image: tutum/wordpress:latest
         ports:
-            - "80:80"
-        volumes:
-            - ./:/var/www/dev
+            - "104.236.129.83:80:80"
         container_name: wp.dev
