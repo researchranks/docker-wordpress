@@ -1,20 +1,10 @@
 version: '2'
 services:
-    wp:
+    custom_wordpress_app:
         build: .
-        dockerfile: dockerfile
-#        image: tutum/wordpress:latest
+        image: tutum/wordpress:latest
         ports:
             - "80:80"
         volumes:
             - ./:/var/www/dev
-#        command: bash /var/www/dev/run.sh
         container_name: wp.dev
-#        environment:
-#            - MYSQL_HOST=mysql_server
-#            - MONGO_HOST=mongo_server
-#            - ELASTIC_HOST=elasticsearch_server
-#        links:
-#            - mysql:mysql_server
-#            - mongo:mongo_server
-#            - elasticsearch:elasticsearch_server
