@@ -1,7 +1,7 @@
 version: '2'
 services:
     custom_wordpress_app:
-        build: .
+        #build: .
         image: tutum/wordpress:latest
         ports:
             - "80:80"
