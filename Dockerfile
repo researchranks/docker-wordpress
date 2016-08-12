@@ -1,1 +1,1 @@
-FROM tutum/wordpress:latest
+#FROM tutum/wordpress:latest

@@ -1,6 +1,6 @@
 custom_wordpress_app:
     container_name: wp.dev
-    build: .
+    #build: .
     image: tutum/wordpress:latest
     ports:
         - "104.236.129.83:80:80"
