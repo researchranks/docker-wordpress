@@ -3,4 +3,4 @@ custom_wordpress_app:
     image: tutum/wordpress:latest
     #build: .
     ports:
-        - "104.236.129.83:80:80"
+        - "45.55.61.91:80:80"
