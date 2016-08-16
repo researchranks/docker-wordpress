@@ -15,6 +15,7 @@ services:
     depends_on:
       - mysql_app
     ports:
+<<<<<<< HEAD
       - '80:80'
 #      - 'replace with public server ip:80:80'
     environment:
@@ -70,3 +71,6 @@ services:
       MYSQL_ROOT_PASSWORD: 'wordpress'
       MYSQL_DATABASE: 'wordpress'
     #entrypoint: '/docker/mysql/mysql.local.sh'
+=======
+        - "45.55.61.91:80:80"
+>>>>>>> 64567151468bf3e322d728443598db50473cd8db
