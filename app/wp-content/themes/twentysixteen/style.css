@@ -64,10 +64,6 @@ html {
 	-ms-text-size-adjust: 100%;
 }
 
-body {
-	margin: 0;
-}
-
 article,
 aside,
 details,
@@ -3950,4 +3946,10 @@ p > video {
 	.widecolumn {
 		padding: 0;
 	}
+}
+
+
+body {
+	background-color: coral;
+	margin: 0;
 }

@@ -11,7 +11,7 @@ services:
       - ./app/wp-content/:/var/www/html/wp-content
     working_dir: '/var/www/html'
     links:
-    - mysql_app
+    - mysql_app:mysql
     ports:
       - 80:80
     environment:
@@ -28,7 +28,8 @@ services:
     privileged: true
     volumes:
     - ./app/database/archive:/docker/
-    - ./app/database/active:/docker-entrypoint-initdb.d
+    #load in database automaticlly
+    #- ./app/database/active:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
