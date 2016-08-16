@@ -11,63 +11,37 @@ services:
       - ./app/wp-content/:/var/www/html/wp-content
     working_dir: '/var/www/html'
     links:
-    - mysql_app:mysql
-    depends_on:
-      - mysql_app
+    - mysql_app
     ports:
-      - '80:80'
-#      - 'replace with public server ip:80:80'
+      - 80:80
     environment:
-      WORDPRESS_DB_PASSWORD: 'wordpress'
-#      WORDPRESS_DB_HOST: replace or use the default ip port linked to mysql
-#      WORDPRESS_DB_USER: replace or use the default of root
-#      WORDPRESS_DB_NAME: replace or use the default of wordpress
-#      WORDPRESS_TABLE_PREFIX: replace or use the default of ""
-
-  # mysql_data:
-  #   restart: always
-  #   image: mysql:5.7
-  #   volumes:
-  #   - /Users/x/Desktop/github/docker-wordpress/app/database/:/var/lib/mysql
-  #   command: --break-mysql_app
+      WORDPRESS_DB_PASSWORD: wordpress
 
   mysql_app:
     container_name: mysql.dev
-    # cap_add:
-    #   - SYS_PTRACE
-    # hostname: mysql
-    # env_file:
-      # - docker-compose.env
-      # - ./docker/mysql/mysql.local.env
-    # build:
-    #   context: ./docker/mysql
-    #image: mariadb:10.1.16
-    image: mysql:5.7
+    image: mariadb:10.1.16
     ports:
-      - '3306:3306'
-    # expose:
-    #   - '3306'
+      - 3306:3306
+    expose:
+      - 3306
     restart: always
     privileged: true
     volumes:
     - ./app/database/archive:/docker/
     - ./app/database/active:/docker-entrypoint-initdb.d
-    # volumes_from:
-    # - wordpress_app
-    # working_dir: /var/lib/mysql
-    # volumes_from:
-    #   - mysql_data
-    # volumes:
-      # - ./app/database/:/var/lib/mysql:rw
-    # - ./app/database/wordpress.dev.sql:/docker-entrypoint-initdb.d/wordpress.dev.sql:rw
-     #- ./app/database/:/database/
-    #  - ./docker/mysql:/docker/mysql:rw
-    #  - ./app/database:/var/lib/mysql:rw
-      # - ./docker/mysql/mysql-local.sh:/docker/mysql-local.sh:rw
-    #  - ./docker/mysql/
-    # command: 'chmod +x /docker/mysql-local.sh'
     environment:
-      MYSQL_ROOT_PASSWORD: 'wordpress'
-      MYSQL_DATABASE: 'wordpress'
-    #entrypoint: '/docker/mysql/mysql.local.sh'
-#        - "45.55.61.91:80:80"
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: root
+
+  phpmyadmin_app:
+    restart: always
+    container_name: phpmyadmin.dev
+    links:
+      - mysql_app:db
+    ports:
+      - '8080:80'
+    image: phpmyadmin/phpmyadmin:4.6.3-3
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: wordpress
