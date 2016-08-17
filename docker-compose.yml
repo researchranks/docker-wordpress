@@ -2,20 +2,26 @@ version: '2'
 
 services:
 
+
+
+
   wordpress_app:
     privileged: true
     container_name: wp.dev
     image: wordpress:4.5
     restart: always
     volumes:
-      - ./app/wp-content/:/var/www/html/wp-content
+      - ./app/themes/:/var/www/html/wp-content/themes/
     working_dir: '/var/www/html'
+    depends_on:
+      - mysql_app
     links:
-    - mysql_app:mysql
+      - mysql_app:mysql
     ports:
       - 80:80
     environment:
       WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_HOST: mysql_app:3306
 
   mysql_app:
     container_name: mysql.dev
@@ -26,8 +32,9 @@ services:
       - 3306
     restart: always
     privileged: true
-    volumes:
-    - ./app/database/archive:/docker/
+    #volumes:
+      # - "./app/database:/var/lib/mysql"
+      #- ./app/database/archive:/docker/
     #load in database automaticlly
     #- ./app/database/active:/docker-entrypoint-initdb.d
     environment:
@@ -35,9 +42,13 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: root
 
+
   phpmyadmin_app:
     restart: always
     container_name: phpmyadmin.dev
+    depends_on:
+      - mysql_app
+      - wordpress_app
     links:
       - mysql_app:db
     ports:
